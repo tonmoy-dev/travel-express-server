@@ -36,6 +36,13 @@ async function run(){
             const bookingPlace = await bookingPlacesCollection.findOne(query);
             res.json(bookingPlace);
         })
+
+        // POST API
+        app.post('/booking_places', async (req, res) => {
+            const bookingPlace = req.body;
+            const result = await bookingPlacesCollection.insertOne(bookingPlace);
+            res.json(result);
+        })
     }
     finally {
         // await client.close();
