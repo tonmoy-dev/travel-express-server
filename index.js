@@ -21,6 +21,7 @@ async function run(){
         // console.log('database is connected');
         const database = client.db('travelExpress');
         const bookingPlacesCollection = database.collection('bookingPlaces');
+        const bookingCollection = database.collection('bookings');
 
         // GET API
         app.get('/booking_places', async (req, res) => {
@@ -35,14 +36,21 @@ async function run(){
             const query = { _id: ObjectId(id) };
             const bookingPlace = await bookingPlacesCollection.findOne(query);
             res.json(bookingPlace);
-        })
+        });
 
-        // POST API
+        // POST API - Add Booking service
         app.post('/booking_places', async (req, res) => {
             const bookingPlace = req.body;
             const result = await bookingPlacesCollection.insertOne(bookingPlace);
             res.json(result);
-        })
+        });
+
+        // POST API - Add User Bookings
+        app.post('/bookings', async (req, res) => {
+            const bookings = req.body;
+            const result = await bookingCollection.insertOne(bookings);
+            res.json(result);
+        });
     }
     finally {
         // await client.close();
