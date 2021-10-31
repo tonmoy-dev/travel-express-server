@@ -45,7 +45,14 @@ async function run(){
             res.json(result);
         });
 
-        // POST API - Add User Bookings
+        // GET API - Add single User Bookings
+        app.get('/bookings', async (req, res) => {
+            const cursor = bookingCollection.find({});
+            const bookings = await cursor.toArray();
+            res.send(bookings);
+        });
+
+        // POST API - Add single User Bookings
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;
             const result = await bookingCollection.insertOne(bookings);
