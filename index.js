@@ -45,18 +45,27 @@ async function run(){
             res.json(result);
         });
 
-        // GET API - Add single User Bookings
+        // GET API - All User Bookings
         app.get('/bookings', async (req, res) => {
             const cursor = bookingCollection.find({});
             const bookings = await cursor.toArray();
             res.send(bookings);
         });
 
-        // POST API - Add single User Bookings
+        // POST API - All User Bookings
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;
             const result = await bookingCollection.insertOne(bookings);
             res.json(result);
+        });
+
+        
+        // MY Bookings
+        app.get("/myBookings/:email", async (req, res) => {
+            const result = await bookingCollection.find({
+                email: req.params.email,
+            }).toArray();
+            res.send(result);
         });
     }
     finally {
