@@ -67,6 +67,14 @@ async function run(){
             }).toArray();
             res.send(result);
         });
+
+        // Cancel Bookings
+        app.delete("/cancelBookings/:id", async (req, res) => {
+            const result = await bookingCollection.deleteOne({
+                _id: ObjectId(req.params.id),
+            });
+            res.send(result);
+        });
     }
     finally {
         // await client.close();
